@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, FlatList, StyleSheet, Text, View } from "react-native";
-import { createAppContainer } from "react-navigation";
+import { createAppContainer} from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 
 class HomeScreen extends React.Component {
@@ -54,10 +55,17 @@ class HomeScreen extends React.Component {
 }
 
 class SearchScreen extends React.Component {
+  static navigationOptions = {
+    title: "Ticker",
+  };
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Search!</Text>
+        <Button
+          title="Ticker Info"
+          onPress={() => navigate("Ticker")}
+        />
       </View>
     );
   }
@@ -71,6 +79,43 @@ class ProfileScreen extends React.Component {
       </View>
     );
   }
+}
+
+class TickerScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.homeView}>
+        <View style={styles.heading}>
+          <Text style={styles.headingText}>Company Name</Text>
+          <Text style={styles.headingText}>$Value</Text>
+          <Text style={styles.note}>Company Ticker</Text>
+        </View>
+
+
+      <Text style={styles.subheadingleft}>Our Model</Text>
+      <Text style={styles.subheadingright}>Performance</Text>
+
+        <View style={styles.flatlistcontainer}>
+          <FlatList
+            data={[
+              ]}
+            renderItem={({ item }) => (
+              <Text style={styles.item}>{item.key}</Text>
+            )}
+          />
+        </View>
+
+
+      
+        <View style={styles.fixToText}>
+
+
+        </View>
+      </View>
+    );
+  }
+
+
 }
 
 const styles = StyleSheet.create({
@@ -118,6 +163,22 @@ const styles = StyleSheet.create({
     paddingTop: "5%",
     paddingBottom: "1%"
   },
+  subheadingleft: {
+    color: "#FFF",
+    fontSize: 20,
+    paddingTop: "5%",
+    right: '30%',
+
+    //paddingBottom: "1%"
+  },
+  subheadingright: {
+    color: "#FFF",
+    fontSize: 20,
+    paddingTop: "5%",
+    left: '30%',
+
+    //paddingBottom: "1%"
+  },
   fixToText: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -145,5 +206,25 @@ const TabNavigator = createBottomTabNavigator({
   Profile: ProfileScreen
 });
 
-export default createAppContainer(TabNavigator);
+const App = createStackNavigator( {
+  //Home: { screen: HomeScreen },
+  //Search: { screen: SearchScreen },
+  //Profile: { screen: ProfileScreen },
+  Ticker: { screen: TickerScreen },
+  Tabs: {
+    screen: TabNavigator
+  }
+},
+  {
+    initialRouteName: "Tabs"
+  }
+);
 
+const Ticker = createStackNavigator( {
+  //Home: { screen: HomeScreen },
+  //Search: { screen: SearchScreen },
+  //Profile: { screen: ProfileScreen },
+  Ticker: { screen: TickerScreen }
+}
+);
+export default createAppContainer(App);
