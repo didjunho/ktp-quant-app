@@ -3,6 +3,7 @@ import { Button, FlatList, StyleSheet, Text, View } from "react-native";
 import { createAppContainer} from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
+import { SearchBar } from 'react-native-elements';
 
 class HomeScreen extends React.Component {
   render() {
@@ -55,18 +56,37 @@ class HomeScreen extends React.Component {
 }
 
 class SearchScreen extends React.Component {
+  state = {
+    search: '',
+  };
+  updateSearch = search => {
+    this.setState({ search });
+  };
   static navigationOptions = {
     title: "Ticker",
   };
   render() {
     const { navigate } = this.props.navigation;
+    const { search } = this.state;
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View style={styles.homeView}>
+        <View style={styles.centerTop}>
+        <SearchBar
+          inputContainerStyle={{backgroundColor: '#686868'}}
+          inputStyle={{color: '#A8A8A8'}}
+          containerStyle={{backgroundColor: 'transparent', width: "90%", borderTopColor: 'transparent', borderBottomColor: 'transparent'}}
+          placeholder={'Company Name'}
+          onChangeText={this.updateSearch}
+          value={search}
+          round={true}
+          placeholderTextColor={'#A8A8A8'}
+        />
         <Button
           title="Ticker Info"
           onPress={() => navigate("Ticker")}
         />
-      </View>
+        </View>
+        </View>
     );
   }
 }
@@ -104,12 +124,7 @@ class TickerScreen extends React.Component {
             )}
           />
         </View>
-
-
-      
         <View style={styles.fixToText}>
-
-
         </View>
       </View>
     );
@@ -142,6 +157,14 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     width: "90%",
     bottom: "5%"
+  },
+  centerTop: {
+    flex: 1,
+    backgroundColor: "#262626",
+    alignItems: "center",
+    width: "90%",
+    bottom: "5%",
+    
   },
 
   flatlistcontainer: {
