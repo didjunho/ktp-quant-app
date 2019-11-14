@@ -65,6 +65,7 @@ class SearchScreen extends React.Component {
   static navigationOptions = {
     title: "Ticker",
   };
+
   render() {
     const { navigate } = this.props.navigation;
     const { search } = this.state;
@@ -81,6 +82,35 @@ class SearchScreen extends React.Component {
           round={true}
           placeholderTextColor={'#A8A8A8'}
         />
+        <View style={styles.container}>
+        <FlatList
+          data={[
+            { key: 'AAPL' },
+            { key: 'SPY' },
+            { key: 'MSFT' },
+            { key: 'F' },
+            { key: 'AMZN' },
+            { key: 'VYM' },
+            { key: 'BYND' },
+            { key: 'V' },
+            { key: 'GOOG' },
+            { key: 'STAR' },
+            { key: 'HOOP' },
+            { key: 'NBA' },
+            { key: 'CRAY' },
+            { key: 'ZYON' },
+            { key: 'FOO' },
+            { key: 'BAR' }
+          ]}
+          renderItem={
+            ({ item }) => {
+            if (item.key.startsWith(search)) {
+              return <Text style={styles.item}>{item.key}</Text>
+          }
+        }
+            }
+        />
+      </View>
         <Button
           title="Ticker Info"
           onPress={() => navigate("Ticker")}
